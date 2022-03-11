@@ -53,8 +53,16 @@ BOOL CWindow::InitInstance(HINSTANCE hInstance, int nCmdShow)
     return true;
 }
 
+// Forward declare message handler from imgui_impl_win32.cpp
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
+
 LRESULT CWindow::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam)) {
+        return true;
+    }
+
     switch (message) {
     case WM_DESTROY:
         PostQuitMessage(0);
@@ -73,7 +81,46 @@ bool CWindow::Begin()
 
     /* ----- Default Begin Variable ----- */
     m_pDevice = make_shared<Device>();
-    m_pDevice->Init(m_tInfo.hWnd);
+    m_pDevice->Init(m_tInfo);
+
+#pragma region 버텍스 버퍼 초기화
+    LPDIRECT3DDEVICE9 dxgi = m_pDevice->GetDXGI();	// 맵핑
+
+    m_vecVertices.push_back(Vertex{ 320.0f, 50.0f, 1.0f, 1.0f, D3DCOLOR_XRGB(0,  0, 255), });
+    m_vecVertices.push_back(Vertex{ 520.0f, 400.0f, 1.0f, 1.0f, D3DCOLOR_XRGB(0, 0, 255), });
+    m_vecVertices.push_back(Vertex{ 120.0f, 400.0f, 1.0f, 1.0f, D3DCOLOR_XRGB(0, 0, 255), });
+
+    dxgi->CreateVertexBuffer(3 * sizeof(Vertex),
+        0,
+        CUSTOMFVF,
+        D3DPOOL_MANAGED,
+        &m_pBuffer,
+        NULL);
+
+    void* pointer = nullptr;    // the void pointer
+
+    m_pBuffer->Lock(0, 0, reinterpret_cast<void**>(&pointer), 0);    // lock the vertex buffer
+    memcpy(pointer, &m_vecVertices[0], m_vecVertices.size() * sizeof(Vertex));    // copy the vertices to the locked buffer
+    m_pBuffer->Unlock();    // unlock the vertex buffer
+#pragma endregion
+
+
+#pragma region IMGUI INIT
+    {
+        // Setup Dear ImGui context
+        IMGUI_CHECKVERSION();
+        ImGui::CreateContext();
+        ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+        // Setup Dear ImGui style
+        ImGui::StyleColorsDark();
+        //ImGui::StyleColorsClassic();
+
+        // Setup Platform/Renderer backends
+        ImGui_ImplWin32_Init(m_tInfo.hWnd);
+        ImGui_ImplDX9_Init(m_pDevice->GetDXGI());
+    }
+#pragma endregion
 
     return true;
 }
@@ -94,18 +141,48 @@ bool CWindow::Update()
     }
 #pragma endregion
 
+
     return true;
 }
 
 bool CWindow::Render()
 {
+#pragma region IMGUI RENDER CLEAR
+    // Start the Dear ImGui frame
+    ImGui_ImplDX9_NewFrame();
+    ImGui_ImplWin32_NewFrame();
+    ImGui::NewFrame();
+
+    static bool 가능 = true;
+    ImGui::ShowDemoWindow(&가능);
+
+    // Rendering
+    ImGui::EndFrame();
+#pragma endregion
+
+ 
+
+
     LPDIRECT3DDEVICE9 dxgi = m_pDevice->GetDXGI();	// 맵핑
-    dxgi->Clear(0, nullptr, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 40, 100), 1.0f, 0);
+    dxgi->Clear(0, nullptr, D3DCLEAR_TARGET, m_tInfo.clearColor, 1.0f, 0);
     dxgi->BeginScene();
 
-    // TODO : 그려주면 된다고 합니다.
+    ImGui::Render();
+    ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
+
+    // TODO : 그려주자
+    // select which vertex format we are using
+    dxgi->SetFVF(CUSTOMFVF);
+
+    // select the vertex buffer to display
+    dxgi->SetStreamSource(0, m_pBuffer, 0, sizeof(Vertex));
+
+    // copy the vertex buffer to the back buffer
+    dxgi->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
+
 
     dxgi->EndScene();
+    
     dxgi->Present(nullptr, nullptr, nullptr, nullptr);
 
     return true;
@@ -113,8 +190,13 @@ bool CWindow::Render()
 
 bool CWindow::End()
 {
-   
+    m_pBuffer->Release();
 
+#pragma region IMGUI RENDER END
+    ImGui_ImplDX9_Shutdown();
+    ImGui_ImplWin32_Shutdown();
+    ImGui::DestroyContext();
+#pragma endregion
     return true;
 }
 
@@ -133,17 +215,22 @@ void CWindow::ReSizeWindow(float width, float height)
     ReSizeWindow(static_cast<int>(width), static_cast<int>(height));
 }
 
-void CWindow::ReSizeWindow(int width, int height)
+void CWindow::ReSizeWindow(int32 width, int32 height)
 {
-    // TODO 구현해야한다
+    m_tInfo.width = width;
+    m_tInfo.height = height;
+
+    RECT rect = { 0, 0, width, height };
+    ::AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
+    ::SetWindowPos(m_tInfo.hWnd, 0, 0, 0, rect.right - rect.left, rect.bottom - rect.top, 0);
 
 
 }
 
 void CWindow::TitleRename(const wstring& str)
 {
-    // TODO 구현해야한다
 
+    ::SetWindowTextW(m_tInfo.hWnd, str.c_str());
 }
 
 int CWindow::Run(HINSTANCE hInstance, int nCmdShow)

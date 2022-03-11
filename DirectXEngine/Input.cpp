@@ -54,7 +54,7 @@ void Input::Update()
 	}
 
 	::GetCursorPos(&m_tMousePos);
-	::ScreenToClient(CORE->GetWindowInfo().hWnd, &m_tMousePos);
+	::ScreenToClient(m_hWnd, &m_tMousePos);
 }
 
 

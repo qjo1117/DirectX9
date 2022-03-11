@@ -7,7 +7,7 @@
 class Device
 {
 public:
-	void Init(HWND hWnd);
+	void Init(class WindowInfo& hWnd);
 	void Clear();
 
 	LPDIRECT3D9 GetDevice() { return m_pDevice; }			//d3d

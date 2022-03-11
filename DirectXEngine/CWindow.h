@@ -3,6 +3,10 @@
 #include <Windows.h>
 #include <string>
 #include <memory>
+#include <vector>
+#include <d3d9.h>
+
+#include "Type.h"
 
 using namespace std;
 
@@ -14,12 +18,17 @@ public:
 	int width = 0;
 	int height = 0;
 	bool isLoop = true;
+	bool windowed = true;
+	uint32 clearColor = D3DCOLOR_XRGB(0, 40, 100);
 
 	HWND hWnd = nullptr;
 	HINSTANCE hInst = 0;
 
 	std::wstring title;
 };
+
+
+
 
 class CWindow
 {
@@ -51,19 +60,23 @@ protected:
 	virtual bool	Render();
 	virtual bool	End();
 
-	void	Logic();
+	void		Logic();
 
 public:
 	/* ----- Helper Function ----- */
 	const WindowInfo& GetWindowInfo() { return m_tInfo; }
 	
 	void ReSizeWindow(float width, float height);
-	void ReSizeWindow(int width, int height);
+	void ReSizeWindow(int32 width, int32 height);
 	void TitleRename(const wstring& str);
 
 private:
 	/* ----- Window Variable ------ */
-	struct WindowInfo m_tInfo = { 800, 500, true };
+	struct WindowInfo m_tInfo = { 1200, 800, true, true };
 
 	shared_ptr<class Device> m_pDevice;
+
+	// ¿”Ω√∞¥√º
+	vector<class Vertex> m_vecVertices;
+	LPDIRECT3DVERTEXBUFFER9 m_pBuffer;
 };

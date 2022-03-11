@@ -14,6 +14,15 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{c9fb00be-6b9b-4fa4-9f3c-b3acd989d6ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\APP">
+      <UniqueIdentifier>{b26c5c8d-97f5-4faa-ac15-035d78108311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{449cec13-b497-4f04-8b3e-97604e492bdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{3f8d6854-6de0-48b1-b546-7bb6a4984ad0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXEngine.h">
@@ -28,9 +37,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Main</Filter>
     </ClInclude>
-    <ClInclude Include="CWindow.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="Macro.h">
       <Filter>Utils</Filter>
     </ClInclude>
@@ -43,11 +49,32 @@
     <ClInclude Include="Input.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Device.h">
-      <Filter>Core</Filter>
-    </ClInclude>
     <ClInclude Include="CApp.h">
-      <Filter>Core</Filter>
+      <Filter>Core\APP</Filter>
+    </ClInclude>
+    <ClInclude Include="CWindow.h">
+      <Filter>Core\APP</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Type.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_win32.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="ImGui\imgui_impl_dx9.h">
+      <Filter>ImGui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -67,9 +94,6 @@
     <ClCompile Include="DirectXEngine.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="CWindow.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
     <ClCompile Include="Macro.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
@@ -83,8 +107,37 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="CApp.cpp">
-      <Filter>Core</Filter>
+      <Filter>Core\APP</Filter>
     </ClCompile>
-    <ClCompile Include="Device.cpp" />
+    <ClCompile Include="CWindow.cpp">
+      <Filter>Core\APP</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Type.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_win32.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_tables.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_widgets.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_demo.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="ImGui\imgui_impl_dx9.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

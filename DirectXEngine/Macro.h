@@ -7,3 +7,6 @@
 
 
 #define SAFEDELETE(ptr) if(ptr) { delete ptr; } ptr = nullptr;
+
+
+#define CUSTOMFVF (D3DFVF_XYZRHW | D3DFVF_DIFFUSE)
