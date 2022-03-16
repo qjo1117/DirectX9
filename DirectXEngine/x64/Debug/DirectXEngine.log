@@ -1,0 +1,27 @@
+﻿  CApp.cpp
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\CWindow.h(81,21): warning C4099: 'Vertex': 처음에는 'struct'을(를) 사용하여 형식 이름을 표시했는데 이제는 'class'을(를) 사용하여 표시합니다.
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\Type.h(24): message : 'Vertex' 선언을 참조하십시오.
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\CApp.h(20,1): warning C4624: 'CApp': 소멸자가 암시적으로 삭제된 것으로 정의되었습니다.
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\Device.h(10,28): warning C4099: 'WindowInfo': 처음에는 'struct'을(를) 사용하여 형식 이름을 표시했는데 이제는 'class'을(를) 사용하여 표시합니다.
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\CWindow.h(16): message : 'WindowInfo' 선언을 참조하십시오.
+  CWindow.cpp
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\CWindow.h(81,21): warning C4099: 'Vertex': 처음에는 'struct'을(를) 사용하여 형식 이름을 표시했는데 이제는 'class'을(를) 사용하여 표시합니다.
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\Type.h(24): message : 'Vertex' 선언을 참조하십시오.
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\Device.h(10,28): warning C4099: 'WindowInfo': 처음에는 'struct'을(를) 사용하여 형식 이름을 표시했는데 이제는 'class'을(를) 사용하여 표시합니다.
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\CWindow.h(16): message : 'WindowInfo' 선언을 참조하십시오.
+  Device.cpp
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\CWindow.h(17,1): warning C4099: 'WindowInfo': 처음에는 'class'을(를) 사용하여 형식 이름을 표시했는데 이제는 'struct'을(를) 사용하여 표시합니다.
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\CWindow.h(16): message : 'WindowInfo' 선언을 참조하십시오.
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\CWindow.h(81,21): warning C4099: 'Vertex': 처음에는 'struct'을(를) 사용하여 형식 이름을 표시했는데 이제는 'class'을(를) 사용하여 표시합니다.
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\Type.h(24): message : 'Vertex' 선언을 참조하십시오.
+  DirectXEngine.cpp
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\CWindow.h(81,21): warning C4099: 'Vertex': 처음에는 'struct'을(를) 사용하여 형식 이름을 표시했는데 이제는 'class'을(를) 사용하여 표시합니다.
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\Type.h(24): message : 'Vertex' 선언을 참조하십시오.
+  Input.cpp
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\CWindow.h(81,21): warning C4099: 'Vertex': 처음에는 'struct'을(를) 사용하여 형식 이름을 표시했는데 이제는 'class'을(를) 사용하여 표시합니다.
+C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\DirectXEngine\Type.h(24): message : 'Vertex' 선언을 참조하십시오.
+  Macro.cpp
+  Timer.cpp
+  Type.cpp
+  pch.cpp
+  DirectXEngine.vcxproj -> C:\Users\user\OneDrive\Desktop\Coding\DirectX9\DirectX9\Output\DirectXEngine.exe

@@ -23,6 +23,9 @@
     <Filter Include="ImGui">
       <UniqueIdentifier>{3f8d6854-6de0-48b1-b546-7bb6a4984ad0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{eaf48751-a553-44bb-affe-ddad33acbfec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXEngine.h">

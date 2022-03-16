@@ -17,6 +17,13 @@
 #include <d3d9.h>
 #pragma comment(lib, "d3d9.lib")
 
+#pragma comment(lib, "d3dx9.lib")
+
+#include <d3dx9.h>
+#include <d3dx9math.h>
+
+
+
 #include "ImGui/imgui.h"
 #include "ImGui/imgui_impl_dx9.h"
 #include "ImGui/imgui_impl_win32.h"

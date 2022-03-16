@@ -39,7 +39,7 @@ public:
 	void	Fast() { m_eState = TIMER_STATE::FAST; }
 
 public:
-	void ShowFps();
+	void	ShowFps();
 
 private:
 	/* ----- Frequency Variable ----- */

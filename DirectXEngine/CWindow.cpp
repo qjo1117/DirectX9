@@ -83,25 +83,139 @@ bool CWindow::Begin()
     m_pDevice = make_shared<Device>();
     m_pDevice->Init(m_tInfo);
 
-#pragma region 버텍스 버퍼 초기화
-    LPDIRECT3DDEVICE9 dxgi = m_pDevice->GetDXGI();	// 맵핑
+    auto dxgi = m_pDevice->GetDXGI();
+//#pragma region Cube Init
+//    {
+//
+//        //
+//        // Create vertex and index buffers.
+//        //
+//
+//        dxgi->CreateVertexBuffer(
+//            8 * sizeof(Vertex),
+//            D3DUSAGE_WRITEONLY,
+//            Vertex::FVF,
+//            D3DPOOL_MANAGED,
+//            &m_pBuffer,
+//            0);
+//
+//        dxgi->CreateIndexBuffer(
+//            36 * sizeof(WORD),
+//            D3DUSAGE_WRITEONLY,
+//            D3DFMT_INDEX16,
+//            D3DPOOL_MANAGED,
+//            &m_pIndex,
+//            0);
+//
+//        //
+//        // Fill the buffers with the cube data.
+//        //
+//
+//        // define unique vertices:
+//        Vertex* vertices;
+//        m_pBuffer->Lock(0, 0, (void**)&vertices, 0);
+//
+//        // vertices of a unit cube
+//        vertices[0] = Vertex{ -1.0f, -1.0f, -1.0f };
+//        vertices[1] = Vertex{ -1.0f, 1.0f, -1.0f };
+//        vertices[2] = Vertex{ 1.0f, 1.0f, -1.0f };
+//        vertices[3] = Vertex{ 1.0f, -1.0f, -1.0f };
+//        vertices[4] = Vertex{ -1.0f, -1.0f, 1.0f };
+//        vertices[5] = Vertex{ -1.0f, 1.0f, 1.0f };
+//        vertices[6] = Vertex{ 1.0f, 1.0f, 1.0f };
+//        vertices[7] = Vertex{ 1.0f, -1.0f, 1.0f };
+//
+//        m_pBuffer->Unlock();
+//
+//        // define the triangles of the cube:
+//        WORD* indices = 0;
+//        m_pIndex->Lock(0, 0, (void**)&indices, 0);
+//
+//        // front side
+//        indices[0] = 0; indices[1] = 1; indices[2] = 2;
+//        indices[3] = 0; indices[4] = 2; indices[5] = 3;
+//
+//        // back side
+//        indices[6] = 4; indices[7] = 6; indices[8] = 5;
+//        indices[9] = 4; indices[10] = 7; indices[11] = 6;
+//
+//        // left side
+//        indices[12] = 4; indices[13] = 5; indices[14] = 1;
+//        indices[15] = 4; indices[16] = 1; indices[17] = 0;
+//
+//        // right side
+//        indices[18] = 3; indices[19] = 2; indices[20] = 6;
+//        indices[21] = 3; indices[22] = 6; indices[23] = 7;
+//
+//        // top
+//        indices[24] = 1; indices[25] = 5; indices[26] = 6;
+//        indices[27] = 1; indices[28] = 6; indices[29] = 2;
+//
+//        // bottom
+//        indices[30] = 4; indices[31] = 0; indices[32] = 3;
+//        indices[33] = 4; indices[34] = 3; indices[35] = 7;
+//
+//        m_pIndex->Unlock();
+//
+//        //
+//        // Position and aim the camera.
+//        //
+//
+//        D3DXVECTOR3 position(0.0f, 0.0f, -5.0f);
+//        D3DXVECTOR3 target(0.0f, 0.0f, 0.0f);
+//        D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);
+//        D3DXMATRIX V;
+//        D3DXMatrixLookAtLH(&V, &position, &target, &up);
+//
+//        dxgi->SetTransform(D3DTS_VIEW, &V);
+//
+//        //
+//        // Set the projection matrix.
+//        //
+//
+//        D3DXMATRIX proj;
+//        D3DXMatrixPerspectiveFovLH(
+//            &proj,
+//            D3DX_PI * 0.5f, // 90 - degree
+//            (float)m_tInfo.width / (float)m_tInfo.height,
+//            1.0f,
+//            1000.0f);
+//        dxgi->SetTransform(D3DTS_PROJECTION, &proj);
+//
+//        //
+//        // Switch to wireframe mode.
+//        //
+//    }
+//#pragma endregion
 
-    m_vecVertices.push_back(Vertex{ 320.0f, 50.0f, 1.0f, 1.0f, D3DCOLOR_XRGB(0,  0, 255), });
-    m_vecVertices.push_back(Vertex{ 520.0f, 400.0f, 1.0f, 1.0f, D3DCOLOR_XRGB(0, 0, 255), });
-    m_vecVertices.push_back(Vertex{ 120.0f, 400.0f, 1.0f, 1.0f, D3DCOLOR_XRGB(0, 0, 255), });
+#pragma region Teapot Init
+    {
+        D3DXCreateTeapot(dxgi, &m_pTeapot, 0);
+        //
+        // Position and aim the camera.
+        //
 
-    dxgi->CreateVertexBuffer(3 * sizeof(Vertex),
-        0,
-        CUSTOMFVF,
-        D3DPOOL_MANAGED,
-        &m_pBuffer,
-        NULL);
+        D3DXVECTOR3 position(0.0f, 0.0f, -3.0f);
+        D3DXVECTOR3 target(0.0f, 0.0f, 0.0f);
+        D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);
+        D3DXMATRIX V;
+        D3DXMatrixLookAtLH(&V, &position, &target, &up);
+        dxgi->SetTransform(D3DTS_VIEW, &V);
 
-    void* pointer = nullptr;    // the void pointer
+        //
+        // Set projection matrix.
+        //
 
-    m_pBuffer->Lock(0, 0, reinterpret_cast<void**>(&pointer), 0);    // lock the vertex buffer
-    memcpy(pointer, &m_vecVertices[0], m_vecVertices.size() * sizeof(Vertex));    // copy the vertices to the locked buffer
-    m_pBuffer->Unlock();    // unlock the vertex buffer
+        D3DXMATRIX proj;
+        D3DXMatrixPerspectiveFovLH(
+            &proj,
+            D3DX_PI * 0.5f, // 90 - degree
+            (float)m_tInfo.width / (float)m_tInfo.height,
+            1.0f,
+            1000.0f);
+        dxgi->SetTransform(D3DTS_PROJECTION, &proj);
+        dxgi->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+    }
 #pragma endregion
 
 
@@ -116,7 +230,7 @@ bool CWindow::Begin()
         ImGui::StyleColorsDark();
         //ImGui::StyleColorsClassic();
 
-        // Setup Platform/Renderer backends
+        // Setup Platform/Rende                                                    rer backends
         ImGui_ImplWin32_Init(m_tInfo.hWnd);
         ImGui_ImplDX9_Init(m_pDevice->GetDXGI());
     }
@@ -132,9 +246,6 @@ bool CWindow::Update()
 
 
 #pragma region Test Input
-    if (INPUT->GetButtonDown(KEY_TYPE::A)) {
-        MessageBox(nullptr, L"Hello", L"Test", MB_OK);
-    }
 
     if (INPUT->GetButtonDown(KEY_TYPE::ESC)) {
         m_tInfo.isLoop = false;
@@ -147,6 +258,11 @@ bool CWindow::Update()
 
 bool CWindow::Render()
 {
+    auto dxgi = m_pDevice->GetDXGI();       // DXGI 있는지 여부를 체크한다.
+    if (dxgi == nullptr) {
+        return false;
+    }
+
 #pragma region IMGUI RENDER CLEAR
     // Start the Dear ImGui frame
     ImGui_ImplDX9_NewFrame();
@@ -160,10 +276,6 @@ bool CWindow::Render()
     ImGui::EndFrame();
 #pragma endregion
 
- 
-
-
-    LPDIRECT3DDEVICE9 dxgi = m_pDevice->GetDXGI();	// 맵핑
     dxgi->Clear(0, nullptr, D3DCLEAR_TARGET, m_tInfo.clearColor, 1.0f, 0);
     dxgi->BeginScene();
 
@@ -171,18 +283,29 @@ bool CWindow::Render()
     ImGui_ImplDX9_RenderDrawData(ImGui::GetDrawData());
 
     // TODO : 그려주자
-    // select which vertex format we are using
-    dxgi->SetFVF(CUSTOMFVF);
 
-    // select the vertex buffer to display
-    dxgi->SetStreamSource(0, m_pBuffer, 0, sizeof(Vertex));
+    D3DXMATRIX Ry;
+    static float y = 0.0f;
+    D3DXMatrixRotationY(&Ry, y);
 
-    // copy the vertex buffer to the back buffer
-    dxgi->DrawPrimitive(D3DPT_TRIANGLELIST, 0, 1);
+    y += DELTATIME;
+    if (y >= 6.28f)
+        y = 0.0f;
+
+    dxgi->SetTransform(D3DTS_WORLD, &Ry);
+
+    
+    //dxgi->SetStreamSource(0, m_pBuffer, 0, sizeof(Vertex));
+    //dxgi->SetIndices(m_pIndex);
+    //dxgi->SetFVF(D3DFVF_XYZ);
+
+    //// Draw cube.
+    //dxgi->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 8, 0, 12);
+
+    m_pTeapot->DrawSubset(0);
 
 
     dxgi->EndScene();
-    
     dxgi->Present(nullptr, nullptr, nullptr, nullptr);
 
     return true;
@@ -190,13 +313,18 @@ bool CWindow::Render()
 
 bool CWindow::End()
 {
-    m_pBuffer->Release();
+
+    SAFERELEASE(m_pBuffer);
+    SAFERELEASE(m_pIndex);
+    SAFERELEASE(m_pTeapot);
 
 #pragma region IMGUI RENDER END
     ImGui_ImplDX9_Shutdown();
     ImGui_ImplWin32_Shutdown();
     ImGui::DestroyContext();
 #pragma endregion
+
+
     return true;
 }
 

@@ -12,6 +12,7 @@ using namespace std;
 
 #define MAX_LOADSTRING 100
 
+
 struct WindowInfo
 {
 public:
@@ -19,7 +20,7 @@ public:
 	int height = 0;
 	bool isLoop = true;
 	bool windowed = true;
-	uint32 clearColor = D3DCOLOR_XRGB(0, 40, 100);
+	uint32 clearColor = D3DCOLOR_XRGB(100, 100, 100);
 
 	HWND hWnd = nullptr;
 	HINSTANCE hInst = 0;
@@ -53,7 +54,7 @@ public:
 	int Run(HINSTANCE hInstance, int nCmdShow);
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-protected:
+public:
 	/* ----- Base Framework Function ----- */
 	virtual bool	Begin();
 	virtual bool	Update();
@@ -79,4 +80,8 @@ private:
 	// ¿”Ω√∞¥√º
 	vector<class Vertex> m_vecVertices;
 	LPDIRECT3DVERTEXBUFFER9 m_pBuffer;
+	LPDIRECT3DINDEXBUFFER9 m_pIndex;
+	LPD3DXMESH m_pTeapot;
+
+	Vec2 m_fPos = {0.0f,0.0f };
 };
